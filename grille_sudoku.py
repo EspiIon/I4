@@ -59,13 +59,29 @@ def grille_en_chaine(grille: "GrilleSudoku") -> str:
     """fonction qui permet d'obtenir une représentation textuelle d'une grille"""
     chaine = ""
     for i in range(9):
+        if i%3 == 0:
+            for a in range(25):
+                if a%8 == 0:
+                    chaine = chaine + "+"
+                else:
+                    chaine = chaine + "-"
+            chaine = chaine + "\n"
+        chaine = chaine + "| "
         for j in range(9):
             if grille[i][j]==None:
-                chaine= chaine + " "
+                chaine= chaine + "  "
             else:
                 chaine = chaine + str(grille[i][j])
-            chaine = chaine + " |"
+                chaine= chaine + " "
+            if j%3 == 2:
+                chaine = chaine + "| "
         chaine = chaine + "\n"
+        
+    for a in range(25):
+                if a%8 == 0:
+                    chaine = chaine + "+"
+                else:
+                    chaine = chaine + "-"
     return chaine
                 
 
