@@ -13,7 +13,7 @@ def grille_remplie(grille: "GrilleSudoku") -> bool:
 
 def obtenir_chiffres_d_une_ligne(grille: "GrilleSudoku", ligne: int) -> set:
     ensemble=set()
-    for i in range(len(grille[ligne])):
+    for i in range(len(grille)):
         coord=coordonnee(i,ligne)
         if not case_vide(grille,coord):
             ensemble.add(obtenir_chiffre(grille,coord))
@@ -40,8 +40,8 @@ def est_chiffre_valable(grille: "GrilleSudoku",
                         chiffre: int) -> bool:
     ChiffresLigne=obtenir_chiffres_d_une_ligne(grille,obtenir_ligne(coord))
     ChiffresColonne=obtenir_chiffres_d_une_colonne(grille,obtenir_colonne(coord))
-    ChiffreCarre = obtenir_chiffres_d_un_carre(grille,obtenir_carre(coord))
-    if not((chiffre in ChiffresColonne | ChiffresLigne | ChiffreCarre)):
+    ChiffresCarre = obtenir_chiffres_d_un_carre(grille,obtenir_carre(coord))
+    if not((chiffre in ChiffresColonne | ChiffresLigne | ChiffresCarre)):
         return True
     return False
 
@@ -49,7 +49,7 @@ def est_chiffre_valable(grille: "GrilleSudoku",
 def obtenir_solutions_possibles(grille: "GrilleSudoku",
                                 coord : "Coordonnee") -> set:
     solutions =set()
-    for i in range(8):
+    for i in range(9):
         if est_chiffre_valable(grille,coord,i+1):
             solutions.add(i+1)
     return solutions
@@ -57,7 +57,7 @@ def obtenir_solutions_possibles(grille: "GrilleSudoku",
 def _trouver_case_vide(grille):
     for i in range(len(grille)):
         for j in range(len(grille[0])):
-            coord =coordonnee(i,j)
+            coord =coordonnee(j+1,i+1)
             if case_vide(grille,coord):
                 return coord
     return coord
@@ -67,12 +67,11 @@ def resoudre_sudoku(grille: "GrilleSudoku") -> bool:
     else:
         coord=_trouver_case_vide(grille)
         solutions=obtenir_solutions_possibles(grille,coord)
-        print(coord)
         for i in solutions:
-            print(i)
             fixer_chiffre(grille,coord,i)
-            print(solutions)
-            resoudre_sudoku(grille)
+            if resoudre_sudoku(grille):
+                return True
+            vider_case(grille,coord)
     return False
 
 def main():
