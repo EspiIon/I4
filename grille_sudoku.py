@@ -13,6 +13,17 @@ def obtenir_ligne(coordonnee: "Coordonnee") -> int:
     """fonction permettant d'obtenir la ligne d'une coordonnée"""
     return coordonnee[1]
 
+
+
+
+
+
+
+
+
+
+
+
 def obtenir_carre(coordonnee: "Coordonnee") -> int:
     """fonction permettant d'obtenir la carré d'une coordonnée"""
     return 3 * ((obtenir_ligne(coordonnee) - 1) // 3) +\
